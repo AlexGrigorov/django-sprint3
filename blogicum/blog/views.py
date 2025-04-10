@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+import datetime
 
-from .models import Post, Category
+from django.shortcuts import get_object_or_404, render
 
-from datetime import datetime
+from .models import Category, Post
 
 
 def posts():

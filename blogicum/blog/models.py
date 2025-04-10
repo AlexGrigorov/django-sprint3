@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 
@@ -60,13 +60,13 @@ class Post(BaseModel):
                   '— можно делать отложенные публикации.'
     )
     author = models.ForeignKey(
-        User, 
-        on_delete=models.CASCADE, 
+        User,
+        on_delete=models.CASCADE,
         verbose_name='Автор публикации',
         related_name='posts_author'
     )
     location = models.ForeignKey(
-        Location, 
+        Location,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -74,7 +74,7 @@ class Post(BaseModel):
         related_name='posts_location'
     )
     category = models.ForeignKey(
-        Category, 
+        Category,
         on_delete=models.SET_NULL,
         null=True,
         verbose_name='Категория',
