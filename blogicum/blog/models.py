@@ -29,6 +29,9 @@ class Location(BaseModel):
         verbose_name = 'местоположение'
         verbose_name_plural = 'Местоположения'
 
+    def __str__(self):
+        return self.name
+
 
 class Category(BaseModel):
     title = models.CharField(max_length=256, verbose_name='Заголовок')
@@ -43,6 +46,9 @@ class Category(BaseModel):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
+
+    def __str__(self):
+        return self.name
 
 
 class Post(BaseModel):
@@ -62,7 +68,8 @@ class Post(BaseModel):
     location = models.ForeignKey(
         Location, 
         on_delete=models.SET_NULL,
-        null=True, 
+        null=True,
+        blank=True,
         verbose_name='Местоположение',
         related_name='posts_location'
     )
@@ -77,3 +84,6 @@ class Post(BaseModel):
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
+
+    def __str__(self):
+        return self.titl

@@ -6,4 +6,4 @@ def about(request):
 
 
 def rules(request):
-    return render(render, 'pages/rules.html')
+    return render(request, 'pages/rules.html')
