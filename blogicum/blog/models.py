@@ -4,7 +4,7 @@ from django.db import models
 User = get_user_model()
 
 
-class BaseModel(models.Model):
+class PublishedModel(models.Model):
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
@@ -19,7 +19,7 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class Location(BaseModel):
+class Location(PublishedModel):
     name = models.CharField(
         max_length=256,
         verbose_name='Название места'
@@ -29,11 +29,11 @@ class Location(BaseModel):
         verbose_name = 'местоположение'
         verbose_name_plural = 'Местоположения'
 
-    def __str__(self):
-        return self.name
+    def __str__(self): 
+        return self.name[:5]
 
 
-class Category(BaseModel):
+class Category(PublishedModel):
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     description = models.TextField(verbose_name='Описание')
     slug = models.SlugField(
@@ -47,11 +47,11 @@ class Category(BaseModel):
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
 
-    def __str__(self):
-        return self.name
+    def __str__(self): 
+        return self.title[:5] 
 
 
-class Post(BaseModel):
+class Post(PublishedModel):
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(
@@ -63,7 +63,6 @@ class Post(BaseModel):
         User,
         on_delete=models.CASCADE,
         verbose_name='Автор публикации',
-        related_name='posts_author'
     )
     location = models.ForeignKey(
         Location,
@@ -71,19 +70,18 @@ class Post(BaseModel):
         null=True,
         blank=True,
         verbose_name='Местоположение',
-        related_name='posts_location'
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
         null=True,
         verbose_name='Категория',
-        related_name='posts_category'
     )
 
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
+        default_related_name='posts'
 
-    def __str__(self):
-        return self.titl
+    def __str__(self): 
+        return self.title[:5] 
