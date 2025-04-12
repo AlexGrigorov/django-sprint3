@@ -29,8 +29,8 @@ class Location(PublishedModel):
         verbose_name = 'местоположение'
         verbose_name_plural = 'Местоположения'
 
-    def __str__(self): 
-        return self.name[:5]
+    def __str__(self):
+        return self.name[:30]
 
 
 class Category(PublishedModel):
@@ -47,8 +47,8 @@ class Category(PublishedModel):
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
 
-    def __str__(self): 
-        return self.title[:5] 
+    def __str__(self):
+        return self.title[:30]
 
 
 class Post(PublishedModel):
@@ -84,4 +84,4 @@ class Post(PublishedModel):
         default_related_name='posts'
 
     def __str__(self): 
-        return self.title[:5] 
+        return self.title[:30]

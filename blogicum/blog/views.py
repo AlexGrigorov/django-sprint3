@@ -5,8 +5,8 @@ from django.shortcuts import get_object_or_404, render
 from .models import Category, Post
 
 
-def posts():
-    return Post.objects.select_related().filter(
+def get_posts(qs):
+    return qs.select_related('location', 'author', 'category').filter(
         is_published=True,
         category__is_published=True,
         pub_date__lte=datetime.now()
@@ -14,13 +14,16 @@ def posts():
 
 
 def index(request):
-    post_list = posts()[:5]
-    return render(request, 'blog/index.html', {'post_list': post_list})
+    return render(
+        request, 'blog/index.html', {'post_list': get_posts(Post.objects)[:5]}
+    )
 
 
 def post_detail(request, post_id):
-    post = get_object_or_404(posts(), pk=post_id)
-    return render(request, 'blog/detail.html', {'post': post})
+    return render(
+        request, 'blog/detail.html',
+        {'post': get_object_or_404(get_posts(Post.objects), pk=post_id)}
+    )
 
 
 def category_posts(request, category_slug):
@@ -30,6 +33,7 @@ def category_posts(request, category_slug):
         slug=category_slug,
         is_published=True
     )
+    posts = get_posts(category.posts)
     context = {'category': category,
-               'post_list': posts().filter(category=category)}
+               'post_list': posts.filter(category=category)}
     return render(request, 'blog/category.html', context)
